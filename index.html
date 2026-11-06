@@ -47,7 +47,7 @@ footer a{color:var(--gold);text-decoration:none}
 #social{margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 #social a{border:1px solid #b89455;color:#fff;padding:8px 18px;border-radius:22px;font-size:.82rem;letter-spacing:1px}
 #social a:hover{background:#b89455;color:#1c1a1d}
-#adminBtn{position:fixed;right:14px;bottom:14px;background:#1c1a1d;color:#fff;border:0;border-radius:24px;padding:11px 16px;cursor:pointer;font-size:.8rem;opacity:.85;box-shadow:0 2px 8px #0005}
+#adminBtn{display:none;position:fixed;right:14px;bottom:14px;background:#1c1a1d;color:#fff;border:0;border-radius:24px;padding:11px 16px;cursor:pointer;font-size:.8rem;opacity:.85;box-shadow:0 2px 8px #0005}
 #panel{display:none;position:fixed;inset:0;z-index:20;background:#000a;align-items:center;justify-content:center;padding:14px}
 #panel .box{background:#fff;border-radius:8px;padding:20px;max-width:420px;width:100%;max-height:92vh;overflow:auto}
 #panel h3{margin:0;font:400 1.2rem Georgia,serif}
@@ -169,6 +169,9 @@ $("add").onclick = () => {
 };
 $("copy").onclick = () => { $("out").select(); try { document.execCommand("copy"); } catch(e) {} };
 $("clear").onclick = () => { if (confirm("¿Borrar los productos agregados desde este botón?")) { extra = []; save(); draw(); } };
+/* El botón de agregar solo aparece si abres el link terminado en #admin */
+function adminCheck(){ $("adminBtn").style.display = location.hash === "#admin" ? "block" : "none"; }
+window.addEventListener("hashchange", adminCheck); adminCheck();
 nav(); draw();
 </script>
 </body>
