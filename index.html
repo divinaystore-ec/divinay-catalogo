@@ -1,1464 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Divinay Store — Catálogo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divinay Store · Catálogo</title>
 <style>
-  :root{
-    --cream:#F7F1EC;
-    --ink:#2A211D;
-    --wine:#6B2737;
-    --wine-deep:#4A1B29;
-    --blush:#E9D3C7;
-    --sand:#EFE4D8;
-    --line: rgba(42,33,29,0.14);
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'Work Sans', sans-serif;
-    line-height:1.5;
-  }
-  h1,h2,h3, .display{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    letter-spacing:-0.01em;
-  }
-
-  /* HERO */
-  .hero{
-    min-height:78vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding: 8vh 8vw 6vh;
-    position:relative;
-    background:
-      radial-gradient(ellipse 60% 50% at 85% 15%, rgba(107,39,55,0.10), transparent),
-      var(--cream);
-    border-bottom:1px solid var(--line);
-  }
-  .hero .kicker{
-    font-size:0.95rem;
-    color:var(--wine);
-    font-style:italic;
-    font-family:'Fraunces', serif;
-    margin-bottom:1.2rem;
-  }
-  .hero h1{
-    font-size:clamp(3rem, 9vw, 6.5rem);
-    line-height:0.95;
-    max-width:11ch;
-  }
-  .hero p.lede{
-    margin-top:1.8rem;
-    max-width:46ch;
-    font-size:1.15rem;
-    color:rgba(42,33,29,0.78);
-  }
-  .hero .meta{
-    margin-top:3rem;
-    display:flex;
-    gap:2.5rem;
-    flex-wrap:wrap;
-    font-size:0.92rem;
-    color:rgba(42,33,29,0.65);
-  }
-  .hero .meta strong{color:var(--ink); font-weight:600;}
-
-  /* NAV / CATEGORY JUMP */
-  .catnav{
-    display:flex;
-    gap:0;
-    overflow-x:auto;
-    border-bottom:1px solid var(--line);
-    background:var(--cream);
-    position:sticky;
-    top:0;
-    z-index:10;
-  }
-  .catnav a{
-    padding: 1.1rem 1.6rem;
-    text-decoration:none;
-    color:var(--ink);
-    font-size:0.92rem;
-    white-space:nowrap;
-    border-right:1px solid var(--line);
-    opacity:0.6;
-    transition:opacity 0.2s ease, background 0.2s ease;
-  }
-  .catnav a:hover{opacity:1; background:var(--sand);}
-
-  /* CATEGORY SECTIONS */
-  .category{
-    padding: 5.5rem 8vw;
-    border-bottom:1px solid var(--line);
-  }
-  .category:nth-of-type(even){
-    background:var(--sand);
-  }
-  .cat-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:2rem;
-    margin-bottom:3rem;
-    flex-wrap:wrap;
-  }
-  .cat-head h2{
-    font-size:clamp(2rem, 4vw, 2.8rem);
-  }
-  .cat-count{
-    font-size:0.9rem;
-    color:rgba(42,33,29,0.55);
-    padding-bottom:0.4rem;
-  }
-
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-    gap:2.2rem;
-  }
-  .card{
-    background:var(--cream);
-    border:1px solid var(--line);
-  }
-  .category:nth-of-type(even) .card{
-    background:var(--cream);
-  }
-  .card-img{
-    aspect-ratio:3/4;
-    background:
-      linear-gradient(135deg, var(--blush), var(--sand));
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:1.5rem;
-    border-bottom:1px solid var(--line);
-  }
-  .card-img span{
-    font-size:0.82rem;
-    color:var(--wine-deep);
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    line-height:1.4;
-  }
-  .card-body{
-    padding:1.2rem 1.3rem 1.4rem;
-  }
-  .card-body h3{
-    font-size:1.15rem;
-    font-weight:600;
-    margin-bottom:0.4rem;
-  }
-  .price{
-    color:var(--wine);
-    font-family:'Fraunces', serif;
-    font-size:1.15rem;
-    font-style:italic;
-    margin-bottom:0.8rem;
-  }
-  .sizes{
-    display:flex;
-    gap:0.4rem;
-    flex-wrap:wrap;
-  }
-  .sizes span{
-    border:1px solid var(--line);
-    padding:0.25rem 0.6rem;
-    font-size:0.8rem;
-    color:rgba(42,33,29,0.75);
-  }
-
-  /* FOOTER */
-  footer{
-    padding:4rem 8vw 5rem;
-    background:var(--wine-deep);
-    color:var(--blush);
-  }
-  footer h2{
-    color:var(--cream);
-    font-size:2rem;
-    margin-bottom:1rem;
-  }
-  footer p{
-    max-width:42ch;
-    color:rgba(233,211,199,0.85);
-    margin-bottom:1.8rem;
-  }
-  .social-row{
-    display:flex;
-    gap:1rem;
-    flex-wrap:wrap;
-  }
-  .social-row a{
-    color:var(--cream);
-    text-decoration:none;
-    border:1px solid rgba(247,241,236,0.35);
-    padding:0.65rem 1.3rem;
-    font-size:0.9rem;
-    transition:background 0.2s ease;
-  }
-  .social-row a:hover{
-    background:rgba(247,241,236,0.12);
-  }
-
-  @media (max-width:600px){
-    .hero{padding:6vh 6vw 5vh;}
-    .category{padding:3.5rem 6vw;}
-    footer{padding:3rem 6vw 4rem;}
-  }
+:root{--bg:#faf7f5;--ink:#1c1a1d;--mut:#8a8087;--accent:#b0396b;--gold:#b89455;--line:#e9e2de}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.hero{background:linear-gradient(135deg,#1c1a1d 0%,#3a2330 100%);color:#fff;text-align:center;padding:60px 20px 50px}
+.hero small{letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-size:.75rem}
+.hero h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(2.2rem,7vw,3.6rem);margin:12px 0 8px;letter-spacing:3px}
+.hero p{margin:0;color:#d8ccd2;font-weight:300}
+.line{width:56px;height:2px;background:var(--gold);margin:20px auto 0}
+nav{position:sticky;top:0;z-index:5;background:#fffdfc;border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;justify-content:center;padding:0 10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{border:0;background:none;padding:16px 14px;cursor:pointer;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap;border-bottom:2px solid transparent;font-family:inherit}
+nav button:hover{color:var(--ink)}
+nav button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:700}
+main{max-width:1100px;margin:0 auto;padding:32px 16px 60px}
+.title{text-align:center;margin:0 0 26px}
+.title h2{font:400 1.7rem Georgia,serif;margin:0;letter-spacing:2px}
+.title p{margin:6px 0 0;color:var(--mut);font-size:.9rem}
+.back{display:inline-block;border:0;background:none;color:var(--accent);cursor:pointer;font-size:.9rem;margin-bottom:14px;font-family:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:26px 20px}
+.card{background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 1px 3px #0001;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 24px #0002}
+.ph{aspect-ratio:3/4;background:linear-gradient(160deg,#f3eaee,#eadde3);display:flex;align-items:center;justify-content:center;font-size:3.4rem;position:relative}
+.ph img{width:100%;height:100%;object-fit:cover}
+.info{padding:16px;text-align:center}
+.info h3{margin:0 0 6px;font:400 1.08rem Georgia,serif}
+.price{font-size:1.25rem;font-weight:700;color:var(--accent);margin-bottom:10px}
+.sizes{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.sizes span{border:1px solid var(--line);color:var(--mut);font-size:.75rem;padding:3px 9px;border-radius:2px}
+/* tarjetas de sección */
+.cat{cursor:pointer;position:relative;border-radius:4px;overflow:hidden;box-shadow:0 1px 3px #0002;transition:transform .25s,box-shadow .25s}
+.cat:hover{transform:translateY(-5px);box-shadow:0 12px 26px #0003}
+.cat .ph{aspect-ratio:4/5;font-size:4.2rem}
+.cat .over{position:absolute;left:0;right:0;bottom:0;padding:46px 14px 16px;background:linear-gradient(transparent,#000c);color:#fff;text-align:center}
+.cat .over h3{margin:0;font:400 1.4rem Georgia,serif;letter-spacing:2px;text-transform:uppercase}
+.cat .over span{font-size:.78rem;letter-spacing:1.5px;color:#e8cfa5;text-transform:uppercase}
+.empty{text-align:center;color:var(--mut);padding:60px 0}
+footer{background:#1c1a1d;color:#b9aeb4;text-align:center;padding:30px 16px;font-size:.85rem}
+footer b{color:#fff;font:400 1.05rem Georgia,serif;letter-spacing:2px}
+footer a{color:var(--gold);text-decoration:none}
+#social{margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#social a{border:1px solid #b89455;color:#fff;padding:8px 18px;border-radius:22px;font-size:.82rem;letter-spacing:1px}
+#social a:hover{background:#b89455;color:#1c1a1d}
+#adminBtn{position:fixed;right:14px;bottom:14px;background:#1c1a1d;color:#fff;border:0;border-radius:24px;padding:11px 16px;cursor:pointer;font-size:.8rem;opacity:.85;box-shadow:0 2px 8px #0005}
+#panel{display:none;position:fixed;inset:0;z-index:20;background:#000a;align-items:center;justify-content:center;padding:14px}
+#panel .box{background:#fff;border-radius:8px;padding:20px;max-width:420px;width:100%;max-height:92vh;overflow:auto}
+#panel h3{margin:0;font:400 1.2rem Georgia,serif}
+#panel label{display:block;margin:12px 0 4px;font-size:.8rem;color:var(--mut)}
+#panel input,#panel select,#panel textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:4px;font-size:1rem;font-family:inherit}
+#panel .row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+#panel button{padding:10px 16px;border:0;border-radius:4px;cursor:pointer;font-size:.9rem}
+.ok{background:var(--accent);color:#fff}.gr{background:#eee}
+textarea{font-family:monospace;font-size:.78rem}
 </style>
 </head>
 <body>
-
-<section class="hero">
-  <div class="kicker">Catálogo</div>
-  <h1>DIVINAY STORE </h1>
-  <p class="lede">Encuentra tu estilo diario, tu talla y el precio justo en un solo lugar.</p>
-  <div class="meta">
-    <div><strong>8</strong> categorías</div>
-    <div><strong>Pedidos</strong> por redes sociales</div>
-    <div><strong>Envíos</strong> a todo el país</div>
-  </div>
-</section>
-
-<nav class="catnav">
-
-    <a href="#blusas">Blusas</a>
-  <a href="#sacos">Sacos</a>
-  <a href="#bodys">Bodys</a>
-  <a href="#pantalones">Pantalones</a>
-   <a href="#faldas">Faldas</a>
-  <a href="#conjuntos">Conjuntos</a>
-  <a href="#camisetas">Camisetas/Sacos</a>
-  <a href="#gorras">Gorras</a>
-  
- 
-</nav>
-
-<!-- ============================================= -->
-<!-- CÓMO AGREGAR UN PRODUCTO:
-     Copia un bloque <div class="card">...</div> completo
-     dentro del <div class="grid"> de la categoría que quieras,
-     y cambia el nombre, precio y tallas.
-     Donde dice "Agrega tu foto aquí" puedes reemplazar
-     el <div class="card-img">...</div> por:
-     <div class="card-img" style="background-image:url('TU-FOTO.jpg'); background-size:cover;"></div>
-================================================== -->
-
-
-
-<section class="category" id="blusas">
-  <div class="cat-head">
-    <h2>Blusas</h2>
-    <div class="cat-count">29 productos</div>
-  </div>
-  <div class="grid">
-
-  <div class="card">
-  <div class="card-img" style="background-image:url('6c90b936-640f-46d4-b40c-794a94e09d15.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Corsé Manga Larga </h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('b94f7b8c-073c-425e-b32c-f90d381703fe.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Corsé Manga Larga</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260926-WA0081.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Corsé Blanco Bordado</h3>
-    <div class="price">$11.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260926-WA0083.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Corsé Rosa Plisado</h3>
-    <div class="price">$11.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0077.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Corset Bordado Nude</h3>
-    <div class="price">$11.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0060.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Halter</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0063.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Leopardo Escote Cuadrado</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0065.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Escote Cuadrado</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0067.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Leopardo Cuello Barco</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0070.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Leopardo Cuello Barco</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0101.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Leopardo Hombro Descubierto </h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0073.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Hombro Descubierto </h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0104.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Chocolate Manga Asimétrica </h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0111.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Top Negro Tiras Finas</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0077.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Terracota Espalda Abierta</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0042.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Vino Peplum Lazo</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-   <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0067.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Tiras Fruncido Celeste</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0068.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Volantes Blanca</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0068(1).jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Celeste Fruncida</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0073.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Botones Fruncida</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0076.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Botones Fruncida</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0034.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Celeste Fruncida</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0069.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Fruncida Rosada</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0064.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Náutica</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0070.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Cruzada Lila</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0072.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Cruzada Blanca</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261006-WA0063.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Blusa Cárdigan Blanco</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0058.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Taupe Escote Drapeado</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0065(1).jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Terracota Argolla</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0095.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Verde Menta Escote Barco</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0040.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Negra Escote Cuadrado</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0093.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Blanca Escote Fruncido</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0044.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Blanca Escote Fruncido</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0039.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Negra</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0041.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Verde Cruzada</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0038.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Rosa Bardot</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0055.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Verde Militar</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0057.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Blanca Manga Corta</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0059.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Beige Floral</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0052.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Blusa Café Canalé</h3>
-    <div class="price">$6.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-  </div>
-</section>
-
-<section class="category" id="sacos">
-  <div class="cat-head">
-    <h2>Sacos</h2>
-    <div class="cat-count">20 productos</div>
-  </div>
-  <div class="grid">
-
-
- <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0090.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Café Polipiel</h3>
-    <div class="price">$18.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0091.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Beige Polipiel</h3>
-    <div class="price">$18.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0019.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Beige Bolsillos</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0089.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Gris Bolsillos</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261001-WA0075.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Chaqueta Arena</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0085.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Crema Tweed</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0089.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Gris Tweed</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0086.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Blanco Borreguito</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0088.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Beige Borreguito</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0087.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco Negro Cuello Cuero</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260919-WA0055(1).jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Sweater Blanco Cuello Alto</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-   
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260919-WA0054.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Saco Crop Letra "H" Beige</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0092.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Tortuga Rayas Gris</h3>
-    <div class="price">$6.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0093.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Alto Cierre Marfil</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261005-WA0095.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Alto Cierre Marfil</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0079.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Alto Cierre Marfil</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0118.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Alto Cierre Marfil</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0123.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Alto Cierre Marfil</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0128.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Alto Cierre Marfil</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0084.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Saco Cuello Alto Cierre Marfil</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-    
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0161.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Chaleco Alpino</h3>
-    <div class="price">$14.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>   
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0148.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Chaleco Gamuza</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261014-WA0160.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Chaleco gamuza</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0140.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Chaleco Cuerina</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0144.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Chaleco Cuerina</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
- </div>
-</section>
-
-<section class="category" id="bodys">
-  <div class="cat-head">
-    <h2>Bodys</h2>
-    <div class="cat-count">9 productos</div>
-  </div>
-  <div class="grid">
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260905-WA0004.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Body Clásico</h3>
-    <div class="price">$5.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-    <div class="sizes" style="margin-top:0.4rem;"><span>Negro</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260905-WA0018.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Body Manga Globo</h3>
-    <div class="price">$5.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-    <div class="sizes" style="margin-top:0.4rem;"><span>Cafe claro</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260905-WA0028.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Body Manga Larga</h3>
-    <div class="price">$5.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-    <div class="sizes" style="margin-top:0.4rem;"><span>Beige</span></div>
-  </div>
-</div>
-
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260909-WA0081.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Body con Relieve</h3>
-    <div class="price">$5.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-    <div class="sizes" style="margin-top:0.4rem;"><span>Beige</span></div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260909-WA0082(1).jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Body con Relieve Manga Corta</h3>
-    <div class="price">$5.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-    <div class="sizes" style="margin-top:0.4rem;"><span>Blanco</span></div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261001-WA0052.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Body</h3>
-    <div class="price">$5.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
- 
-  
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261001-WA0054.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Body</h3>
-    <div class="price">$5.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-     </div>
-</section>
-  
-<section class="category" id="pantalones">
-  <div class="cat-head">
-    <h2>Pantalones</h2>
-    <div class="cat-count">16 productos</div>
-  </div>
-  <div class="grid">
-
-  
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0408.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Pantalón Palazzo</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0409.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Pantalón Palazzo</h3>
-    <div class="price">$7.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0395.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Jean Fit Ajustado</h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>8</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0394.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Jean Fit Ajustado</h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>8</span></div>
-  </div>
-</div>
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0397.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Jean Fit Ajustado</h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>10</span></div>
-  </div>
-</div>
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0401.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Jean Wide Leg</h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>10</span></div>
-  </div>
-</div>
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0399.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Jean Fit Ajustado</h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>12</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0398.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Jean Fit Ajustado</h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>12</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0400.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Jean Wide Leg</h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>12</span></div>
-  </div>
-</div>
-    
- 
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0040(1).jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Pantalón Pana Azul Marino</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0060(1).jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Pantalón Pana Verde Militar</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0042.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Pantalón Pana Gris Jogger</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-  </div>
-</section>
-<section class="category" id="faldas">
-  <div class="cat-head">
-    <h2>Faldas</h2>
-    <div class="cat-count">16 productos</div>
-  </div>
-  <div class="grid">
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0412.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$18.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0418.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$18.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0413.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0416.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0420.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$16.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0422.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$9.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0415.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$9.00</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20261011-WA0421.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
-  <div class="card-body">
-    <h3>Falda</h3>
-    <div class="price">$7.50</div>
-    <div class="sizes"><span>S</span><span>M</span></div>
-  </div>
-</div>
-  </div>
-</section>
-  <section class="category" id="conjuntos">
-  <div class="cat-head">
-    <h2>Conjuntos</h2>
-   <div class="cat-count">3 productos</div>
-  </div>
-  <div class="grid">
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0058.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Conjunto Negro Básico</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260927-WA0054.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Conjunto Café Básico</h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>M</span></div>
-  </div>
-</div>
-  </div>
-</section>
-<section class="category" id="camisetas">
-  <div class="cat-head">
-    <h2>Camisetas</h2>
-   <div class="cat-count">16 productos</div>
-  </div>
-  <div class="grid">
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0114.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0118.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0116.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0112.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0117.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260930-WA0119.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260905-WA0007.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-<div class="card-img" style="background-image:url('IMG-20261006-WA0071.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260905-WA0011.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span></div>
-  </div>
-</div>
-
-<div class="card">
-<div class="card-img" style="background-image:url('IMG-20261006-WA0066.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>L</span></div>  
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260905-WA0024.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span></div>
-  </div>
-</div>
-
-
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260912-WA0072.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span></div>
-    <div class="sizes" style="margin-top:0.4rem;"><span>Negro</span></div>
-  </div>
-</div>
-
-
-<div class="card">
-<div class="card-img" style="background-image:url('IMG-20261006-WA0075.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>  <div class="card-body">
-    <h3>Camiseta Hombre</h3>
-    <div class="price">$10.00</div>
-    <div class="sizes"><span>M</span></div>
-    <div class="sizes" style="margin-top:0.4rem;"><span>Blanco</span></div>
-  </div>
-</div>
-
-    <div class="card">
-  <div class="card-img" style="background-image:url('d1df3069-2ec9-4c1d-870d-d4f940f8a9be.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco de Hombre </h3>
-    <div class="price">$22.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('70634ef6-ae0d-48a5-a0ff-607754f390d8.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco de Hombre </h3>
-    <div class="price">$22.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('a3962610-3973-4ea5-9ed7-63719b53566d.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco de Hombre </h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('f19f032c-1ceb-4606-80d1-3f13c8403ed6.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco de Hombre </h3>
-    <div class="price">$20.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-img" style="background-image:url('a9491929-4c8b-490c-bee8-0c77fbe306ec.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center;">
-  </div>
-  <div class="card-body">
-    <h3>Saco de Hombre </h3>
-    <div class="price">$15.00</div>
-    <div class="sizes"><span>M</span><span>L</span></div>
-  </div>
-</div>
-  </div>
-  </section>
-<section class="category" id="gorras">
-  <div class="cat-head">
-    <h2>Gorras</h2>
-    <div class="cat-count">6 productos</div>
-  </div>
-  <div class="grid">
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260906-WA0111.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Gorro Rosa</h3>
-    <div class="price">$3.50</div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260906-WA0117.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Gorro Levi's</h3>
-    <div class="price">$3.50</div>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260906-WA0112.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Gorro Amarillo Lakers</h3>
-    <div class="price">$3.50</div>
-  </div>
-</div>
-
-
-
-<div class="card">
-  <div class="card-img" style="background-image:url('IMG-20260906-WA0116.jpg'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#F0EEE9;"></div>
-  <div class="card-body">
-    <h3>Gorro Rosa A's</h3>
-    <div class="price">$3.50</div>
-  </div>
-</div>
-
-  </div>
-</section>
-
-<footer>
-  <h2>¿Te gustó algo?</h2>
-  <p>Escríbenos por redes sociales para hacer tu pedido — indica el nombre de la prenda y la talla que necesitas.</p>
-  <div class="social-row">
-<a href="https://instagram.com/divinay_store" target="_blank">Instagram</a>
-<a href="https://tiktok.com/@divinaystore" target="_blank">TikTok</a>
-<a href="https://wa.me/593995368515" target="_blank">WhatsApp</a>
-  </div>
-</footer>
-
+<header class="hero"><small>Moda · Estilo · Elegancia</small><h1>DIVINAY STORE</h1><p>Colección de ropa para mujer</p><div class="line"></div></header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<footer><b>DIVINAY STORE</b><br>Consulta disponibilidad y pedidos por <a id="wa" target="_blank" rel="noopener" href="#">WhatsApp</a><div id="social"></div></footer>
+
+<button id="adminBtn">＋ Agregar producto</button>
+<div id="panel"><div class="box">
+  <h3>Agregar producto</h3>
+  <label>Sección</label><select id="fCat"></select>
+  <label>Nombre</label><input id="fName" placeholder="Ej: Blusa floral">
+  <label>Precio (USD)</label><input id="fPrice" type="number" step="0.01" placeholder="15">
+  <label>Tallas</label><input id="fSizes" placeholder="S, M, L">
+  <label>Foto (nombre del archivo, opcional)</label><input id="fImg" placeholder="blusa1.jpg">
+  <div class="row"><button class="ok" id="add">Agregar</button><button class="gr" id="close">Cerrar</button></div>
+  <hr style="margin:18px 0;border:0;border-top:1px solid #eee">
+  <small>Para dejarlos fijos para todos, copia este texto y pégalo dentro de la lista PRODUCTOS del archivo:</small>
+  <textarea id="out" rows="5" readonly></textarea>
+  <div class="row"><button class="gr" id="copy">Copiar texto</button><button class="gr" id="clear">Borrar los agregados aquí</button></div>
+</div></div>
+
+<script>
+/* 1) TU WHATSAPP (con código de país, sin + ni espacios) */
+const WHATSAPP = "593000000000";
+
+/* TUS REDES: escribe solo tu usuario, sin @ (ej: "divinaystore").
+   Si dejas una vacía, no se muestra. */
+const INSTAGRAM = "";
+const TIKTOK = "";
+
+/* 2) FOTO DE PORTADA DE CADA SECCIÓN (la que se ve en la página principal).
+   Escribe el nombre del archivo que subas a GitHub. Si la dejas vacía,
+   se usa la foto del primer producto de esa sección, o un ícono. */
+const PORTADAS = {
+  Blusas: "", Sacos: "", Bodys: "", Pantalones: "",
+  Faldas: "", Conjuntos: "", Camisetas: "", Gorras: ""
+};
+
+/* 3) TUS PRODUCTOS: una línea por prenda.
+   Formato: ["Sección", "Nombre", precio, "Tallas", "foto.jpg o vacío"] */
+const PRODUCTOS = [
+  ["Blusas",     "Blusa de ejemplo",    12, "S, M, L", ""],
+  ["Sacos",      "Saco de ejemplo",     17, "Talla estándar", ""],
+  ["Bodys",      "Body de ejemplo",     10, "S, M, L", ""],
+  ["Pantalones", "Jean de ejemplo",     20, "28, 30, 32", ""],
+  ["Faldas",     "Falda de ejemplo",    13, "S, M, L", ""],
+  ["Conjuntos",  "Conjunto de ejemplo", 25, "S, M, L", ""],
+  ["Camisetas",  "Camiseta de ejemplo",  8, "S, M, L", ""],
+  ["Gorras",     "Gorra de ejemplo",     7, "Única", ""],
+];
+
+/* ====== Desde aquí no necesitas tocar nada ====== */
+const CATS = ["Blusas","Sacos","Bodys","Pantalones","Faldas","Conjuntos","Camisetas","Gorras"];
+const ICON = {Blusas:"👚",Sacos:"🧥",Bodys:"🩱",Pantalones:"👖",Faldas:"👗",Conjuntos:"👚",Camisetas:"👕",Gorras:"🧢"};
+const $ = id => document.getElementById(id);
+let extra = [], cur = "Todos";
+try { extra = JSON.parse(localStorage.getItem("divinay_extra") || "[]"); } catch(e) {}
+const save = () => { try { localStorage.setItem("divinay_extra", JSON.stringify(extra)); } catch(e) {} };
+const all = () => PRODUCTOS.concat(extra);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+$("wa").href = "https://wa.me/" + WHATSAPP;
+(function(){
+  const clean = u => String(u).trim().replace(/^@/, "");
+  const links = [];
+  if (INSTAGRAM) links.push(`<a target="_blank" rel="noopener" href="https://www.instagram.com/${clean(INSTAGRAM)}">Instagram</a>`);
+  if (TIKTOK) links.push(`<a target="_blank" rel="noopener" href="https://www.tiktok.com/@${clean(TIKTOK)}">TikTok</a>`);
+  $("social").innerHTML = links.join("");
+})();
+
+function go(c){ cur = c; nav(); draw(); window.scrollTo({top:0,behavior:"smooth"}); }
+function nav(){
+  $("nav").innerHTML = ["Todos",...CATS].map(c => `<button class="${c===cur?"on":""}" data-c="${c}">${c}</button>`).join("");
+  $("nav").querySelectorAll("button").forEach(b => b.onclick = () => go(b.dataset.c));
+}
+function cover(c){
+  const items = all().filter(p => p[0] === c);
+  const img = PORTADAS[c] || (items.find(p => p[4]) || [])[4] || "";
+  return {img, n: items.length};
+}
+function draw(){
+  if (cur === "Todos") {
+    $("main").innerHTML = `<div class="title"><h2>Nuestras secciones</h2><p>Toca una sección para ver todas las prendas</p></div><div class="grid">` +
+      CATS.map(c => { const {img,n} = cover(c);
+        return `<div class="cat" data-c="${c}"><div class="ph">${img ? `<img src="${esc(img)}" alt="${c}">` : ICON[c]}</div>
+        <div class="over"><h3>${c}</h3><span>${n} ${n===1?"producto":"productos"}</span></div></div>`; }).join("") + `</div>`;
+    $("main").querySelectorAll(".cat").forEach(el => el.onclick = () => go(el.dataset.c));
+  } else {
+    const list = all().filter(p => p[0] === cur);
+    $("main").innerHTML = `<button class="back" id="back">← Todas las secciones</button><div class="title"><h2>${cur}</h2><p>${list.length} ${list.length===1?"producto":"productos"}</p></div>` +
+      (list.length ? `<div class="grid">` + list.map(p => {
+        const [cat,name,price,sizes,img] = p;
+        const chips = String(sizes).split(",").map(s => s.trim()).filter(Boolean).map(s => `<span>${esc(s)}</span>`).join("");
+        return `<div class="card"><div class="ph">${img ? `<img src="${esc(img)}" alt="${esc(name)}">` : ICON[cat]}</div>
+        <div class="info"><h3>${esc(name)}</h3><div class="price">$${Number(price).toFixed(2)}</div><div class="sizes">${chips}</div></div></div>`;
+      }).join("") + `</div>` : `<div class="empty">Pronto tendremos nuevos productos en esta sección.</div>`);
+    $("back").onclick = () => go("Todos");
+  }
+  $("out").value = extra.map(p => "  " + JSON.stringify(p) + ",").join("\n");
+}
+$("fCat").innerHTML = CATS.map(c => `<option>${c}</option>`).join("");
+$("adminBtn").onclick = () => $("panel").style.display = "flex";
+$("close").onclick = () => $("panel").style.display = "none";
+$("add").onclick = () => {
+  const name = $("fName").value.trim(), price = parseFloat($("fPrice").value);
+  if (!name || isNaN(price)) { alert("Escribe el nombre y el precio."); return; }
+  extra.push([$("fCat").value, name, price, $("fSizes").value.trim() || "Única", $("fImg").value.trim()]);
+  save(); ["fName","fPrice","fSizes","fImg"].forEach(i => $(i).value = ""); draw();
+};
+$("copy").onclick = () => { $("out").select(); try { document.execCommand("copy"); } catch(e) {} };
+$("clear").onclick = () => { if (confirm("¿Borrar los productos agregados desde este botón?")) { extra = []; save(); draw(); } };
+nav(); draw();
+</script>
 </body>
 </html>
