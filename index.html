@@ -288,7 +288,7 @@ go = function(c){
   if (c === "Todos") history.pushState(null, "", location.pathname + location.search);
   else location.hash = c.toLowerCase();
   cur = c; nav(); draw(); adminCheck();
-  window.scrollTo({top:0, behavior:"smooth"});
+ window.scrollTo(0, 0);
 };
 window.addEventListener("hashchange", fromHash);
 window.addEventListener("popstate", fromHash);
