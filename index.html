@@ -234,7 +234,7 @@ $("wa").href = "https://wa.me/" + WHATSAPP;
   $("social").innerHTML = links.join("");
 })();
 
-function go(c){ cur = c; nav(); draw(); window.scrollTo({top:0,behavior:"smooth"}); }
+function go(c){ cur = c; nav(); draw();    window.scrollTo(0, 0); }
 function nav(){
   $("nav").innerHTML = ["Todos",...CATS].map(c => `<button class="${c===cur?"on":""}" data-c="${c}">${c}</button>`).join("");
   $("nav").querySelectorAll("button").forEach(b => b.onclick = () => go(b.dataset.c));
