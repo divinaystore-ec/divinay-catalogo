@@ -15,6 +15,9 @@ body{margin:0;font-family:"Helvetica Neue",Arial,sans-serif;background:var(--bg)
 .line{width:56px;height:2px;background:var(--gold);margin:20px auto 0}
 nav{position:sticky;top:0;z-index:5;background:#fffdfc;border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;justify-content:center;padding:0 10px;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
+        nav{justify-content:flex-start}
+   nav button:first-child{margin-left:auto}
+   nav button:last-child{margin-right:auto}
 nav button{border:0;background:none;padding:16px 14px;cursor:pointer;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap;border-bottom:2px solid transparent;font-family:inherit}
 nav button:hover{color:var(--ink)}
 nav button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:700}
