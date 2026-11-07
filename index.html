@@ -276,23 +276,26 @@ $("add").onclick = () => {
 $("copy").onclick = () => { $("out").select(); try { document.execCommand("copy"); } catch(e) {} };
 $("clear").onclick = () => { if (confirm("¿Borrar los productos agregados desde este botón?")) { extra = []; save(); draw(); } };
    /* El botón de agregar solo aparece si abres el link terminado en #admin */
-   let admin = location.hash === "#admin";
-   function adminCheck(){ if (location.hash === "#admin") admin = true; $("adminBtn").style.display = admin ? "block" : "none"; }
-   /* Botón "atrás" del navegador y del celular */
-   function fromHash(){
-     const h = location.hash.slice(1).toLowerCase();
-     if (h !== "admin") cur = CATS.find(c => c.toLowerCase() === h) || "Todos";
-     nav(); draw(); adminCheck();
-   }
-   go = function(c){
-     if (c === "Todos") history.pushState(null, "", location.pathname + location.search);
-     else location.hash = c.toLowerCase();
-     cur = c; nav(); draw(); adminCheck();
-     window.scrollTo({top:0, behavior:"smooth"});
-   };
-   window.addEventListener("hashchange", fromHash);
-   window.addEventListener("popstate", fromHash);
-   fromHash();
+  let admin = location.hash === "#admin";
+let drawn = false;
+function adminCheck(){ if (location.hash === "#admin") admin = true; $("adminBtn").style.display = admin ? "block" : "none"; }
+/* Botón "atrás" del navegador y del celular */
+function fromHash(){
+  const h = location.hash.slice(1).toLowerCase();
+  const next = h === "admin" ? cur : (CATS.find(c => c.toLowerCase() === h) || "Todos");
+  if (!drawn || next !== cur) { cur = next; nav(); draw(); }
+  drawn = true; adminCheck();
+}
+/* Al entrar a una sección se ve directo la primera foto, sin animación */
+go = function(c){
+  if (c === "Todos") history.pushState(null, "", location.pathname + location.search);
+  else location.hash = c.toLowerCase();
+  cur = c; nav(); draw(); drawn = true; adminCheck();
+  window.scrollTo(0, c === "Todos" ? 0 : document.querySelector(".hero").offsetHeight);
+};
+window.addEventListener("hashchange", fromHash);
+window.addEventListener("popstate", fromHash);
+fromHash();
 </script>
 </body>
 </html>
