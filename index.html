@@ -275,10 +275,24 @@ $("add").onclick = () => {
 };
 $("copy").onclick = () => { $("out").select(); try { document.execCommand("copy"); } catch(e) {} };
 $("clear").onclick = () => { if (confirm("¿Borrar los productos agregados desde este botón?")) { extra = []; save(); draw(); } };
-/* El botón de agregar solo aparece si abres el link terminado en #admin */
-function adminCheck(){ $("adminBtn").style.display = location.hash === "#admin" ? "block" : "none"; }
-window.addEventListener("hashchange", adminCheck); adminCheck();
-nav(); draw();
+   /* El botón de agregar solo aparece si abres el link terminado en #admin */
+   let admin = location.hash === "#admin";
+   function adminCheck(){ if (location.hash === "#admin") admin = true; $("adminBtn").style.display = admin ? "block" : "none"; }
+   /* Botón "atrás" del navegador y del celular */
+   function fromHash(){
+     const h = location.hash.slice(1).toLowerCase();
+     if (h !== "admin") cur = CATS.find(c => c.toLowerCase() === h) || "Todos";
+     nav(); draw(); adminCheck();
+   }
+   go = function(c){
+     if (c === "Todos") history.pushState(null, "", location.pathname + location.search);
+     else location.hash = c.toLowerCase();
+     cur = c; nav(); draw(); adminCheck();
+     window.scrollTo({top:0, behavior:"smooth"});
+   };
+   window.addEventListener("hashchange", fromHash);
+   window.addEventListener("popstate", fromHash);
+   fromHash();
 </script>
 </body>
 </html>
